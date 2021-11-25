@@ -13,7 +13,8 @@ class Dispatcher:
     def __init__(self, monitors: List[Monitor]) -> None:
         self._monitors = monitors
         self._monitor_tasks: List[asyncio.Task] = []
-        self._logger = logging.getLogger(self.__class__.__name__)
+        self._logger = logging.getLogger(name=self.__class__.__name__)
+        self._logger.setLevel(level="DEBUG")
         self._stopping = False
 
     def run(self) -> None:

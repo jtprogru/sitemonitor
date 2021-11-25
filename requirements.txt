@@ -1,5 +1,8 @@
-dependency-injector
 aiohttp
+black
+dependency-injector
+flake8
+isort
 pyyaml
 pytest
 pytest-asyncio

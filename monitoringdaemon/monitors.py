@@ -2,7 +2,7 @@
 
 import logging
 import time
-from typing import Dict, Any
+from typing import Any, Dict
 
 from .http import HttpClient
 
@@ -10,7 +10,8 @@ from .http import HttpClient
 class Monitor:
     def __init__(self, check_every: int) -> None:
         self.check_every = check_every
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = logging.getLogger(name=self.__class__.__name__)
+        self.logger.setLevel(level="DEBUG")
 
     async def check(self) -> None:
         raise NotImplementedError()
@@ -45,7 +46,9 @@ class HttpMonitor(Monitor):
         time_took = time_end - time_start
 
         self.logger.info(
-            "Response code: %s, content length: %s, request took: %s seconds",
+            "%s %s Response code: %s, content length: %s, request took: %s seconds",
+            response.method,
+            response.url,
             response.status,
             response.content_length,
             round(time_took, 3),

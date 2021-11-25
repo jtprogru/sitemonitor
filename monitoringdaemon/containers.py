@@ -5,15 +5,13 @@ import sys
 
 from dependency_injector import containers, providers
 
-from . import http, monitors, dispatcher, utils
+from . import dispatcher, http, monitors
 
 
 class ApplicationContainer(containers.DeclarativeContainer):
     """Application container."""
 
     config = providers.Configuration()
-
-    utils.monitors_discovery(cfg=config)
 
     configure_logging = providers.Callable(
         logging.basicConfig,
@@ -52,6 +50,12 @@ class ApplicationContainer(containers.DeclarativeContainer):
         monitors.HttpMonitor,
         http_client=http_client,
         options=config.monitors.httpbin,
+    )
+
+    example_monitor = providers.Factory(
+        monitors.HttpMonitor,
+        http_client=http_client,
+        options=config.monitors.example,
     )
 
     dispatcher = providers.Factory(

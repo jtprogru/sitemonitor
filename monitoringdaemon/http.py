@@ -1,10 +1,11 @@
 """Http client module."""
 
-from aiohttp import ClientSession, ClientTimeout, ClientResponse
+from aiohttp import ClientResponse, ClientSession, ClientTimeout
 
 
 class HttpClient:
-    async def request(self, method: str, url: str, timeout: int) -> ClientResponse:
+    @staticmethod
+    async def request(method: str, url: str, timeout: int) -> ClientResponse:
         async with ClientSession(timeout=ClientTimeout(timeout)) as session:
             async with session.request(method, url) as response:
                 return response

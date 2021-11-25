@@ -6,41 +6,11 @@ from unittest import mock
 
 import pytest
 
-from .containers import ApplicationContainer
-
 
 @dataclasses.dataclass
 class RequestStub:
     status: int
     content_length: int
-
-
-@pytest.fixture
-def container():
-    container = ApplicationContainer()
-    container.config.from_dict(
-        {
-            "log": {
-                "level": "INFO",
-                "formant": "[%(asctime)s] [%(levelname)s] [%(name)s]: %(message)s",
-            },
-            "monitors": {
-                "example": {
-                    "method": "GET",
-                    "url": "http://fake-example.com",
-                    "timeout": 1,
-                    "check_every": 1,
-                },
-                "httpbin": {
-                    "method": "GET",
-                    "url": "https://fake-httpbin.org/get",
-                    "timeout": 1,
-                    "check_every": 1,
-                },
-            },
-        }
-    )
-    return container
 
 
 @pytest.mark.asyncio
